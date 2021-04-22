@@ -3,12 +3,13 @@ class Ball {
     var options = {
       isStatic: false,
       restitution: 0.5,
-      density: 1.5
+      density: 1.5,
+      friction:1
     }
 
     this.radius = 40;
     this.image = loadImage("Images/football.png");
-    this.body = bodies.circle(x, y, 40, options);
+    this.body = bodies.circle(x, y, 20, options);
     this.x = x;
     this.y = y;
     World.add(world, this.body);
@@ -16,10 +17,13 @@ class Ball {
   }
   return() {
     if (this.body.position.x > 800) {
-      Matter.Body.setPosition(this.body, { x: this.x, y: this.body.position.y })
+      Matter.Body.setPosition(this.body, { x: 0, y: this.body.position.y })
     }
     if (this.body.position.x < 0) {
       Matter.Body.setPosition(this.body, { x: 800, y: this.body.position.y })
+    }
+    if(this.body.speed>5){
+      this.body.speed = 1
     }
   }
   display() {
