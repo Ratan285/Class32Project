@@ -3,13 +3,11 @@ const Body = Matter.Body;
 const World = Matter.World;
 const bodies = Matter.Bodies;
 
-var score;
-
+var score = 0;
 
 function preload() {
   backGroundImage = loadImage("Images/ground.png");
   goalImage = loadImage("Images/GoalRing.png");
-
 }
 function setup() {
   createCanvas(800, 400);
@@ -27,7 +25,7 @@ function setup() {
   edges1.visible = false;
 
   obstacle = createSprite(600, 200, 20, 50);
-  obstacle.velocityY = -10;
+  //obstacle.velocityY = -10;
   obstacle.visible = false;
 
 
@@ -37,9 +35,10 @@ function setup() {
   goal = new Goal(773, 200);
   goalKeeper = new Keeper(obstacle.x, obstacle.y);
 
-  score = 0;
 
-  
+
+  //console.log(goal);
+  //console.log(ball.radius / 2 + goal.height / 2)
 
 }
 
@@ -48,8 +47,15 @@ function draw() {
   background(backGroundImage);
   Engine.update(engine);
 
-  if (ball.body.position.x - goal.body.position.x < (ball.width - goal.width) / 2) {
-    score = score + 1;
+  // if (goal.body.position.x - ball.body.position.x <= ball.body.height / 2 + goal.body.height / 2) {
+  //    score = score + 1;
+  // }else{
+
+  // }
+
+  // goal.debug = true;
+  if (Matter.Detector.canCollide(ball.body, goal.body)) {
+    score = score + 10
   }
 
   obstacle.bounceOff(edges);
@@ -69,11 +75,11 @@ function draw() {
   push();
   fill("black");
   textSize(20);
-  text("score: " + score, 700, 50);
-  text("position: " + mouseX + ", " + mouseY, 500, 50)
-  text("sum: " +(ball.width - goal.width)+""+Math.round((ball.body.position.x - goal.body.position.x)), 300, 50)
+  text("score: " + score, 650, 50);
+  text("position: " + mouseX + ", " + mouseY, 470, 50);
+  text("sum: " + Math.round((ball.body.position.x - goal.body.position.x)), 350, 50)
   pop();
-  text(mouseX + mouseY, 500, 50)
+  // console.log(goal.body.speed);
 }
 function mouseDragged() {
   Matter.Body.setStatic(ball.body, false);

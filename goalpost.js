@@ -1,10 +1,10 @@
 class Goal {
   constructor(x, y) {
     var options = {
-      isStatic: true
+     restitution: 0.5
     }
 
-    this.body = bodies.rectangle(x, y, 50,150, options);
+    this.body = bodies.rectangle(x, y,50,150, options);
     this.x = x;
     this.y = y;
     this.width = 70;
